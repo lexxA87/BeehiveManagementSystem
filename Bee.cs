@@ -11,9 +11,9 @@
 
         public virtual float CostPerShift { get; private set; }
 
-        public void WorkTheNextShift(float honeyConsume)
+        public void WorkTheNextShift()
         {
-            if (HoneyVault.ConsumeHoney(honeyConsume)) DoJob();
+            if (HoneyVault.ConsumeHoney(CostPerShift)) DoJob();
         }
         protected virtual void DoJob()
         {

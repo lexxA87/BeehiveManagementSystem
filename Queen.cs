@@ -6,31 +6,36 @@ namespace BeehiveManagementSystem
     {
         const float EGGS_PER_SHIFT = 0.45f;
         const float HONEY_PER_UNASSIGNED_WORKER = 0.5f;
-        public Queen(string job) : base(job)
+        public Queen() : base("Queen")
         {
             AssignBee("Nectar Collector");
             AssignBee("Honey Manufacturer");
             AssignBee("Egg Care");
+            UpdateStatusReport();
         }
 
         public override float CostPerShift { get { return 2.15f; } }
 
         private Bee[] workers = Array.Empty<Bee>();
-        private float unassignedWorkers;
+        private float unassignedWorkers = 3.0f;
         private float eggs;
+        public string StatusReport { get; private set; } = "";
 
-        private string UpdateStatusReport()
+        private void UpdateStatusReport()
         {
             Bee[] nectarCollector = Array.FindAll(workers, worker => worker.Job == "Nectar Collector");
             Bee[] honeyManufacturer = Array.FindAll(workers, worker => worker.Job == "Honey Manufacturer");
             Bee[] eggsCare = Array.FindAll(workers, worker => worker.Job == "Egg Care");
+
             string honeyAndNektarReport = HoneyVault.StatusReport;
-            string beesReport = $"\nEgg count: {eggs: 0.0}\nUnassigned workers: {unassignedWorkers: 0.0}" +
+
+            string beesReport = $"\nEgg count: {eggs: 0.00}\nUnassigned workers: {unassignedWorkers: 0}\n" +
                 $"{nectarCollector.Length} Nectar Collector bee{MultWord(nectarCollector.Length)}\n" +
                 $"{honeyManufacturer.Length} Honey Manufacturer bee{MultWord(honeyManufacturer.Length)}\n" +
                 $"{eggsCare.Length} Egg Care bee{MultWord(eggsCare.Length)}\n" +
                 $"TOTAL WORKERS: {workers.Length}\n";
-            return honeyAndNektarReport + beesReport;
+
+            StatusReport = honeyAndNektarReport + beesReport;
         }
         private void AddWorker(Bee worker)
         {
@@ -42,18 +47,18 @@ namespace BeehiveManagementSystem
             }
         }
 
-        private void AssignBee(string job)
+        public void AssignBee(string job)
         {
             switch (job)
             {
                 case "Nectar Collector":
-                    AddWorker(new EggCare(job));
+                    AddWorker(new NectarCollector(job));
                     break;
                 case "Honey Manufacturer":
                     AddWorker(new HoneyManufacturer(job));
                     break;
                 case "Egg Care":
-                    AddWorker(new EggCare(job));
+                    AddWorker(new EggCare(job, this));
                     break;
                 default: break;
             }
@@ -64,7 +69,7 @@ namespace BeehiveManagementSystem
             eggs += EGGS_PER_SHIFT;
             foreach (Bee worker in workers)
             {
-                worker.WorkTheNextShift(worker.CostPerShift);
+                worker.WorkTheNextShift();
             }
             HoneyVault.ConsumeHoney(HONEY_PER_UNASSIGNED_WORKER * workers.Length);
             UpdateStatusReport();

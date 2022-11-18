@@ -2,12 +2,13 @@
 {
     internal class HoneyManufacturer : Bee
     {
+        const float NECTAR_PROCESSED_PER_SHIFT = 33.15f;
         public HoneyManufacturer(string job) : base(job) { }
 
         public override float CostPerShift { get { return 1.7f; } }
         protected override void DoJob()
         {
-            base.DoJob();
+            HoneyVault.ConvertNectarToHoney(NECTAR_PROCESSED_PER_SHIFT);
         }
     }
 }
