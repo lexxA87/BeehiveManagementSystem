@@ -19,6 +19,15 @@
         <Label Content="Job Assignments" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20, 0" FontSize="18"/>
         <Label Grid.Column="1" Content="Queen's Report" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="18" Margin="20,0"/>
         <TextBox x:Name="statusReport" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" IsReadOnly="True" Margin="20"/>
+        <Button x:Name="WorkShift" Content="Work the next shift" Margin="20" Grid.Row="2" FontSize="18" Click="WorkShift_Click" Cursor="Hand" Background="#FFFB7000"/>
+         <StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="20">
+            <ComboBox x:Name="jobSelector" Margin="0,0,0,20" SelectedIndex="0" FontSize="18" Cursor="Hand">
+                <ListBoxItem Content="Nectar Collector" Cursor="Hand"/>
+                <ListBoxItem Content="Honey Manufacturer" Cursor="Hand"/>
+                <ListBoxItem Content="Egg Care" Cursor="Hand"/>
+            </ComboBox>
+            <Button x:Name="AssignJob" Click="AssignJob_Click" Content="Assign this job to a bee" FontSize="18" Cursor="Hand"/>
+        </StackPanel>
 
     </Grid>
 </Window>
