@@ -18,6 +18,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="Job Assignments" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20, 0" FontSize="18"/>
         <Label Grid.Column="1" Content="Queen's Report" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="18" Margin="20,0"/>
+        <TextBox x:Name="statusReport" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" IsReadOnly="True" Margin="20"/>
 
     </Grid>
 </Window>
