@@ -26,8 +26,10 @@ namespace BeehiveManagementSystem
             Bee[] eggsCare = Array.FindAll(workers, worker => worker.Job == "Egg Care");
             string honeyAndNektarReport = HoneyVault.StatusReport;
             string beesReport = $"\nEgg count: {eggs: 0.0}\nUnassigned workers: {unassignedWorkers: 0.0}" +
-                $"{nectarCollector.Length} Nectar Collector bee\n{honeyManufacturer.Length} Honey manufacturer bee\n" +
-                $"{eggsCare.Length} Egg care bee\nTOTAL WORKERS: {workers.Length}\n";
+                $"{nectarCollector.Length} Nectar Collector bee{MultWord(nectarCollector.Length)}\n" +
+                $"{honeyManufacturer.Length} Honey Manufacturer bee{MultWord(honeyManufacturer.Length)}\n" +
+                $"{eggsCare.Length} Egg Care bee{MultWord(eggsCare.Length)}\n" +
+                $"TOTAL WORKERS: {workers.Length}\n";
             return honeyAndNektarReport + beesReport;
         }
         private void AddWorker(Bee worker)
@@ -75,6 +77,12 @@ namespace BeehiveManagementSystem
                 eggs -= eggsToConvert;
                 unassignedWorkers += eggsToConvert;
             }
+        }
+
+        private string MultWord(int length)
+        {
+            if (length > 1) return "s";
+            else return "";
         }
     }
 }
