@@ -9,7 +9,7 @@
 
         public string Job { get; private set; }
 
-        public virtual float CostPerShift { get; private set; }
+        public virtual float CostPerShift { get; }
 
         public void WorkTheNextShift()
         {

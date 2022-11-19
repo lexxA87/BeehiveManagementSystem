@@ -18,7 +18,7 @@ namespace BeehiveManagementSystem
 
         private Bee[] workers = Array.Empty<Bee>();
         private float unassignedWorkers = 3.0f;
-        private float eggs;
+        private float eggs = 0.0f;
         public string StatusReport { get; private set; } = "";
 
         private void UpdateStatusReport()
@@ -29,7 +29,7 @@ namespace BeehiveManagementSystem
 
             string honeyAndNektarReport = HoneyVault.StatusReport;
 
-            string beesReport = $"\nEgg count: {eggs: 0.00}\nUnassigned workers: {unassignedWorkers: 0}\n" +
+            string beesReport = $"\nEgg count: {eggs: 0.00}\nUnassigned workers: {unassignedWorkers: 0.0}\n" +
                 $"{nectarCollector.Length} Nectar Collector bee{MultWord(nectarCollector.Length)}\n" +
                 $"{honeyManufacturer.Length} Honey Manufacturer bee{MultWord(honeyManufacturer.Length)}\n" +
                 $"{eggsCare.Length} Egg Care bee{MultWord(eggsCare.Length)}\n" +
@@ -52,13 +52,13 @@ namespace BeehiveManagementSystem
             switch (job)
             {
                 case "Nectar Collector":
-                    AddWorker(new NectarCollector(job));
+                    AddWorker(new NectarCollector());
                     break;
                 case "Honey Manufacturer":
-                    AddWorker(new HoneyManufacturer(job));
+                    AddWorker(new HoneyManufacturer());
                     break;
                 case "Egg Care":
-                    AddWorker(new EggCare(job, this));
+                    AddWorker(new EggCare(this));
                     break;
                 default: break;
             }
@@ -71,13 +71,13 @@ namespace BeehiveManagementSystem
             {
                 worker.WorkTheNextShift();
             }
-            HoneyVault.ConsumeHoney(HONEY_PER_UNASSIGNED_WORKER * workers.Length);
+            HoneyVault.ConsumeHoney(HONEY_PER_UNASSIGNED_WORKER * unassignedWorkers);
             UpdateStatusReport();
         }
 
         public void CareForEggs(float eggsToConvert)
         {
-            if (eggs >= eggsToConvert)
+            if (eggs >= eggsToConvert && eggs > 0)
             {
                 eggs -= eggsToConvert;
                 unassignedWorkers += eggsToConvert;

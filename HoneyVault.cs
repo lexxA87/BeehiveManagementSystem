@@ -51,7 +51,7 @@
 
         public static void CollectNectar(float amount)
         {
-            if (amount > 0) nectar += amount;
+            if (amount > 0f) nectar += amount;
         }
     }
 }
