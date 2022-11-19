@@ -1,6 +1,6 @@
 ﻿namespace BeehiveManagementSystem
 {
-    internal class Bee
+    abstract class Bee
     {
         public Bee(string job)
         {
@@ -9,15 +9,12 @@
 
         public string Job { get; private set; }
 
-        public virtual float CostPerShift { get; }
+        public abstract float CostPerShift { get; }
 
         public void WorkTheNextShift()
         {
             if (HoneyVault.ConsumeHoney(CostPerShift)) DoJob();
         }
-        protected virtual void DoJob()
-        {
-            // oveerrides subclasses
-        }
+        protected abstract void DoJob();
     }
 }
