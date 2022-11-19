@@ -4,7 +4,7 @@
     {
         const float CARE_PROGRESS_PER_SHIFT = 0.15f;
         private Queen queen;
-        public EggCare(Queen queen) : base("Egg care")
+        public EggCare(Queen queen) : base("Egg Care")
         {
             this.queen = queen;
         }
