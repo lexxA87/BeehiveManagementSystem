@@ -16,16 +16,16 @@ namespace BeehiveManagementSystem
 
         public override float CostPerShift { get { return 2.15f; } }
 
-        private Bee[] workers = Array.Empty<Bee>();
+        private IWorker[] workers = Array.Empty<IWorker>();
         private float unassignedWorkers = 3.0f;
         private float eggs = 0.0f;
         public string StatusReport { get; private set; } = "";
 
         private void UpdateStatusReport()
         {
-            Bee[] nectarCollector = Array.FindAll(workers, worker => worker.Job == "Nectar Collector");
-            Bee[] honeyManufacturer = Array.FindAll(workers, worker => worker.Job == "Honey Manufacturer");
-            Bee[] eggsCare = Array.FindAll(workers, worker => worker.Job == "Egg Care");
+            IWorker[] nectarCollector = Array.FindAll(workers, worker => worker.Job == "Nectar Collector");
+            IWorker[] honeyManufacturer = Array.FindAll(workers, worker => worker.Job == "Honey Manufacturer");
+            IWorker[] eggsCare = Array.FindAll(workers, worker => worker.Job == "Egg Care");
 
             string honeyAndNektarReport = HoneyVault.StatusReport;
 
@@ -37,7 +37,7 @@ namespace BeehiveManagementSystem
 
             StatusReport = honeyAndNektarReport + beesReport;
         }
-        private void AddWorker(Bee worker)
+        private void AddWorker(IWorker worker)
         {
             if (unassignedWorkers >= 1)
             {
@@ -67,7 +67,7 @@ namespace BeehiveManagementSystem
         protected override void DoJob()
         {
             eggs += EGGS_PER_SHIFT;
-            foreach (Bee worker in workers)
+            foreach (IWorker worker in workers)
             {
                 worker.WorkTheNextShift();
             }

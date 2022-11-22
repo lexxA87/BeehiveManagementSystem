@@ -1,6 +1,6 @@
 ﻿namespace BeehiveManagementSystem
 {
-    abstract class Bee
+    abstract class Bee : IWorker
     {
         public Bee(string job)
         {
