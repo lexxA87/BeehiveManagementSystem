@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace BeehiveManagementSystem
 {
-    internal class Queen : Bee
+    internal class Queen : Bee, INotifyPropertyChanged
     {
         const float EGGS_PER_SHIFT = 0.45f;
         const float HONEY_PER_UNASSIGNED_WORKER = 0.5f;
@@ -19,6 +20,14 @@ namespace BeehiveManagementSystem
         private IWorker[] workers = Array.Empty<IWorker>();
         private float unassignedWorkers = 3.0f;
         private float eggs = 0.0f;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public string StatusReport { get; private set; } = "";
 
         private void UpdateStatusReport()
@@ -36,6 +45,7 @@ namespace BeehiveManagementSystem
                 $"TOTAL WORKERS: {workers.Length}\n";
 
             StatusReport = honeyAndNektarReport + beesReport;
+            OnPropertyChanged("StatusReport");
         }
         private void AddWorker(IWorker worker)
         {
